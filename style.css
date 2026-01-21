@@ -760,18 +760,27 @@ img {
         background-position: center;
         background-repeat: no-repeat;
         min-height: 600px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
+        position: relative;
     }
     
     .hero-button button {
-        position: relative;
+        bottom: 0px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
         font-size: 16px;
         padding: 14px 32px;
-        width: 100%;
+        width: 90%;
         max-width: 280px;
-        margin: 60px auto 0;
+        min-width: auto;
+    }
+    
+    .hero-button button:hover {
+        transform: translateX(-50%) translateY(-2px);
+    }
+    
+    .hero-button button:active {
+        transform: translateX(-50%);
     }
     
     .captch-img {
