@@ -37,11 +37,120 @@
         <!-- Canonical URL -->
         <link rel="canonical" href="https://www.crystalview.co.il/">
         
-        <!-- Stylesheet and Fonts -->
-        <link rel="stylesheet" href="style.css">
+        <!-- Preload Critical Resources -->
+        <link rel="preload" href="style.css" as="style">
+        <link rel="preload" href="img/hero-bg.png" as="image">
+        <link rel="preload" href="img/logo.png" as="image">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap" as="style">
+        
+        <!-- Stylesheet and Fonts -->
+        <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+        
+        <!-- Page Loader Styles - Inline for instant load -->
+        <style>
+            #page-loader {
+                position: fixed;
+                inset: 0;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #fafcff;
+                transition: all 0.7s ease-out;
+            }
+            
+            #page-loader.exiting {
+                opacity: 0;
+                transform: scale(1.05);
+            }
+            
+            .loader-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+                transition: all 0.5s ease-out;
+            }
+            
+            #page-loader.exiting .loader-content {
+                opacity: 0;
+                transform: translateY(1rem);
+            }
+            
+            .logo-container {
+                position: relative;
+                width: 7rem;
+                height: 7rem;
+            }
+            
+            @media (min-width: 768px) {
+                .logo-container {
+                    width: 9rem;
+                    height: 9rem;
+                }
+            }
+            
+            .logo-bg {
+                position: absolute;
+                inset: 0;
+                opacity: 0.15;
+                filter: grayscale(100%);
+            }
+            
+            .logo-fill-container {
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                transition: clip-path 0.2s ease-out;
+            }
+            
+            .logo-fill {
+                position: absolute;
+                inset: 0;
+            }
+            
+            .logo-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+            
+            .logo-glow {
+                position: absolute;
+                inset: 0;
+                border-radius: 50%;
+                filter: blur(2rem);
+                background: rgba(91, 155, 213, 0.2);
+                transition: opacity 0.5s;
+            }
+            
+            .progress-bar {
+                width: 10rem;
+                height: 2px;
+                background: rgba(212, 229, 247, 0.4);
+                border-radius: 9999px;
+                overflow: hidden;
+            }
+            
+            .progress-fill {
+                height: 100%;
+                background: linear-gradient(to right, #5b9bd5, #88c5e0, #5b9bd5);
+                border-radius: 9999px;
+                transition: width 0.2s ease-out;
+            }
+            
+            .loader-text {
+                color: rgba(44, 62, 80, 0.5);
+                font-size: 0.75rem;
+                letter-spacing: 0.3em;
+                font-weight: 300;
+                text-transform: uppercase;
+                font-family: 'Assistant', sans-serif;
+            }
+        </style>
         
         <script>
             !function(f,b,e,v,n,t,s)
@@ -62,6 +171,100 @@
               
     </head>
     <body>
+        <!-- Page Loader -->
+        <div id="page-loader">
+            <div class="loader-content">
+                <div class="logo-container">
+                    <img src="img/logo.png" alt="" class="logo-bg">
+                    <div class="logo-fill-container" id="logoFillContainer">
+                        <img src="img/logo.png" alt="CrystalView" class="logo-fill">
+                    </div>
+                    <div class="logo-glow" id="logoGlow"></div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="loader-text">Crystal View</p>
+            </div>
+        </div>
+        
+        <script>
+        // Inline loader script for immediate execution
+        (function() {
+            const loader = document.getElementById('page-loader');
+            const logoFillContainer = document.getElementById('logoFillContainer');
+            const progressFill = document.getElementById('progressFill');
+            const logoGlow = document.getElementById('logoGlow');
+            
+            if (!loader) return;
+            
+            const isFirstLoad = !sessionStorage.getItem('hasLoaded');
+            
+            if (!isFirstLoad) {
+                loader.style.display = 'none';
+                return;
+            }
+            
+            sessionStorage.setItem('hasLoaded', 'true');
+            
+            let fillProgress = 0;
+            const minDisplayTime = 1500;
+            const startTime = Date.now();
+            
+            const fillInterval = setInterval(() => {
+                if (fillProgress >= 100) {
+                    clearInterval(fillInterval);
+                    return;
+                }
+                
+                const increment = Math.max(1, (100 - fillProgress) / 20);
+                fillProgress = Math.min(100, fillProgress + increment);
+                
+                if (logoFillContainer) {
+                    logoFillContainer.style.clipPath = `inset(${100 - fillProgress}% 0 0 0)`;
+                }
+                if (progressFill) {
+                    progressFill.style.width = fillProgress + '%';
+                }
+                if (logoGlow) {
+                    logoGlow.style.opacity = fillProgress / 200;
+                }
+            }, 40);
+            
+            function handleComplete() {
+                const elapsed = Date.now() - startTime;
+                const remainingTime = Math.max(0, minDisplayTime - elapsed);
+                
+                setTimeout(() => {
+                    fillProgress = 100;
+                    if (logoFillContainer) {
+                        logoFillContainer.style.clipPath = 'inset(0% 0 0 0)';
+                    }
+                    if (progressFill) {
+                        progressFill.style.width = '100%';
+                    }
+                    
+                    setTimeout(() => {
+                        loader.classList.add('exiting');
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                        }, 700);
+                    }, 300);
+                }, remainingTime);
+            }
+            
+            if (document.readyState === 'complete') {
+                handleComplete();
+            } else {
+                window.addEventListener('load', handleComplete);
+            }
+            
+            setTimeout(() => {
+                handleComplete();
+            }, 4000);
+        })();
+        </script>
+        
         <script src="script.js" defer></script>
         <div class="container">
             
@@ -85,14 +288,14 @@
                    
                    
                     <div class="features-item">
-                        <img src="img/protection.png" alt="Feature 3">
+                        <img src="img/protection.png" alt="Feature 3" loading="lazy">
                         <div class="feature-item-content">
                             <h3>בטיחות מקסימלית</h3>
                             <span>מונע נפילות של ילדים ומספק הגנה חכמה ובטיחותית</span>
                         </div>
                     </div>
                     <div class="features-item">
-                        <img src="img/transparency.png" alt="Feature 2">
+                        <img src="img/transparency.png" alt="Feature 2" loading="lazy">
                         <div class="feature-item-content">
                             <h3>שקופים לגמרי</h3>
                             <span>שומר על אור, אוויר</span>
@@ -101,7 +304,7 @@
                      
                     </div>
                     <div class="features-item">
-                        <img src="img/standard.png" alt="Feature 1" >
+                        <img src="img/standard.png" alt="Feature 1" loading="lazy">
                         <div class="feature-item-content">
                             <h3>תקני וחזק</h3>
                             <span>מיוצר ע״י התקנים</span>
@@ -124,20 +327,20 @@
                         <div class="disclaimer-list">
                             <div class="disclaimer-item">
                                 
-                                    <img src="img/arrow-icon.png" alt="Arrow">
+                                    <img src="img/arrow-icon.png" alt="Arrow" loading="lazy">
                                
                                 <span>ייעוץ חינם ללא התחייבות</span>
                             </div>
                             <div class="disclaimer-item">
-                                <img src="img/arrow-icon.png" alt="Arrow">
+                                <img src="img/arrow-icon.png" alt="Arrow" loading="lazy">
                                 <span>ליווי אישי משלב המדידה</span>
                             </div>
                             <div class="disclaimer-item">
-                                <img src="img/arrow-icon.png" alt="Arrow">
+                                <img src="img/arrow-icon.png" alt="Arrow" loading="lazy">
                                 <span>התקנה מקצועית</span>
                             </div>
                             <div class="disclaimer-item">
-                                <img src="img/arrow-icon.png" alt="Arrow">
+                                <img src="img/arrow-icon.png" alt="Arrow" loading="lazy">
                                 <span>אחריות ל-10 שנים</span>
                             </div>
                         </div>
@@ -170,7 +373,7 @@
                             <button type="submit" class="submit-button">לקבלת ייעוץ חינם</button>
                         </form>
                     </div>
-                    <img src="img/bubbles.png" alt="Contact Us Background" class="contact-us-bg">
+                    <img src="img/bubbles.png" alt="Contact Us Background" class="contact-us-bg" loading="lazy">
                 </div>
                 <div id="successPopup" class="popup-modal">
                     <div class="popup-content">
