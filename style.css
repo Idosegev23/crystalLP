@@ -754,7 +754,7 @@ img {
 /* Small mobile devices (480px and below) */
 @media (max-width: 480px) {
     .hero-content {
-        padding: 60px 20px 40px;
+        padding: 60px 20px 80px;
         background-image: url('img/heroPhone.png');
         background-size: cover;
         background-position: center;
@@ -771,14 +771,15 @@ img {
         padding: 14px 32px;
         width: 100%;
         max-width: 280px;
-        margin: 0 auto;
+        margin: 20px auto 0;
     }
     
     .captch-img {
         width: 200px;
         top: 35%;
-        left: 50%;
-        transform: translateX(-50%);
+        right: 5%;
+        left: auto;
+        transform: none;
     }
     
     .captch-img img {
