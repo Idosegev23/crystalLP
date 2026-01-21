@@ -754,24 +754,31 @@ img {
 /* Small mobile devices (480px and below) */
 @media (max-width: 480px) {
     .hero-content {
-        padding: var(--spacing-lg) var(--spacing-sm);
+        padding: 60px 20px 40px;
         background-image: url('img/heroPhone.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        min-height: var(--size-hero-mobile);
+        min-height: 600px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
     }
     
     .hero-button button {
-        font-size: var(--font-base);
-        padding: var(--spacing-xs) var(--spacing-md);
-        position: absolute;
-        bottom: 5%;
+        position: relative;
+        font-size: 16px;
+        padding: 14px 32px;
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
     }
     
     .captch-img {
-        top: 44%;
-        left: 40%;
+        width: 200px;
+        top: 35%;
+        left: 50%;
+        transform: translateX(-50%);
     }
     
     .captch-img img {
@@ -779,32 +786,45 @@ img {
     }
     
     .features {
-        padding: var(--spacing-xl) var(--spacing-sm);
+        padding: 50px 15px;
+    }
+    
+    .features-content {
+        gap: 40px;
     }
     
     .features-item {
-        padding: 45px var(--spacing-sm) 25px;
+        padding: 55px 20px 30px;
+        border-radius: 2px 20px 20px 20px;
+    }
+    
+    .features-item img {
+        width: 56px;
+        height: 56px;
+        top: -28px;
     }
     
     .features-item h3 {
-        font-size: var(--font-md);
+        font-size: 20px;
+        margin: 10px 0 8px;
     }
     
     .feature-item-content span {
-        font-size: var(--font-sm);
+        font-size: 15px;
+        line-height: 1.7;
     }
     
     .disclaimers {
-        padding: var(--spacing-lg) var(--spacing-sm);
+        padding: 40px 20px;
         background-image: url('img/disclaimerPhone.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        min-height: var(--spacing-disclaimer-mobile);
+        min-height: 400px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: center;
     }
     
     .disclaimer-content-left {
@@ -812,26 +832,62 @@ img {
         text-align: center;
     }
     
+    .disclaimer-header h3 {
+        font-size: 22px;
+        margin-bottom: 8px;
+    }
+    
+    .disclaimers-second-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    
+    .disclaimer-list {
+        margin-top: 20px;
+    }
+    
+    .disclaimer-item {
+        font-size: 15px;
+        margin-bottom: 12px;
+        gap: 12px;
+    }
+    
+    .disclaimer-item img {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .contact-us {
+        padding-bottom: 40px;
+        margin-top: -15px;
+    }
+    
     .contact-us-content {
-        padding: var(--spacing-lg) var(--spacing-sm);
-        border-radius: var(--radius-md);
+        padding: 40px 20px;
+        border-radius: 20px;
     }
     
     .contact-title {
-        font-size: var(--font-xl);
+        font-size: 24px;
+        margin-bottom: 10px;
     }
     
     .contact-subtitle {
-        font-size: var(--font-sm);
+        font-size: 15px;
+        line-height: 1.6;
     }
     
     .form-input {
-        padding: 12px var(--spacing-sm);
-        font-size: var(--font-base);
+        padding: 14px 16px;
+        font-size: 16px;
+        border-radius: 10px;
     }
     
     .submit-button {
-        padding: 12px 25px;
+        padding: 16px 24px;
+        font-size: 16px;
+        border-radius: 10px;
+        margin-top: 10px;
     }
     
     .popup-content {
