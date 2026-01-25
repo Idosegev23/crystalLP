@@ -1,5 +1,5 @@
-// Function to display the popup
-function showPopup(formData) {
+
+function integrateToMondayAndThanksPage(formData) {
     fetch('https://hook.eu2.make.com/susxntb72mb2lkc42id7my9x0x6smml9', {
         method: 'POST',
         body: JSON.stringify(formData),
@@ -7,10 +7,8 @@ function showPopup(formData) {
             'Content-Type': 'application/json'
         }
     }).then((res) => {
-        const popup = document.getElementById('successPopup');
-        if (popup) {
-            popup.style.display = 'flex';
-        }
+        window.location.href = 'thanks.html';
+      
     })
     
 
@@ -33,16 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Event Listener for the form submission
     contactForm.addEventListener('submit', function(event) {
-        // 1. Prevent the default form submission (which causes a page reload/redirect)
         event.preventDefault();
 
         const form = event.target;
         const formData = new FormData(form);
         const actionUrl = form.action;
-
-        // Show loading state
         const submitButton = form.querySelector('.submit-button');
         const originalText = submitButton ? submitButton.textContent : '';
         if (submitButton) {
@@ -50,22 +44,17 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.textContent = 'שולח...';
         }
 
-        // 2. Send the form data using the Fetch API (AJAX)
         fetch(actionUrl, {
             method: 'POST',
             body: formData,
             headers: {
-                'Accept': 'application/json' // Essential header for FormSubmit AJAX
+                'Accept': 'application/json' 
             }
         })
         .then(response => {
             if (response.ok) {
-                
-                // 3. If submission is successful, show the custom popup
-                showPopup(formData);
-                form.reset(); // Clear the form fields if needed
+                integrateToMondayAndThanksPage(formData);
             } else {
-                // Handle errors (e.g., show an error message)
                 alert('אירעה שגיאה בעת שליחת הטופס. אנא נסה שוב.');
             }
         })
