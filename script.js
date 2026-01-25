@@ -1,9 +1,19 @@
 // Function to display the popup
-function showPopup() {
-    const popup = document.getElementById('successPopup');
-    if (popup) {
-        popup.style.display = 'flex';
-    }
+function showPopup(formData) {
+    fetch('https://hook.eu2.make.com/susxntb72mb2lkc42id7my9x0x6smml9', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((res) => {
+        const popup = document.getElementById('successPopup');
+        if (popup) {
+            popup.style.display = 'flex';
+        }
+    })
+    
+
 }
 
 // Function to close the popup
@@ -50,8 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
+                
                 // 3. If submission is successful, show the custom popup
-                showPopup();
+                showPopup(formData);
                 form.reset(); // Clear the form fields if needed
             } else {
                 // Handle errors (e.g., show an error message)
