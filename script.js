@@ -10,19 +10,24 @@ function integrateToMondayAndThanksPage(formData) {
         window.location.href = 'thanks.html';
       
     })
-    
-
 }
-
-// Function to close the popup
-function closePopup() {
-    const popup = document.getElementById('successPopup');
-    if (popup) {
-        popup.style.display = 'none';
+function createFormDataObject(formData) {
+    const formDataObj = {};
+    for (let [key, value] of formData.entries()) {
+        formDataObj[key] = value;
     }
+    return formDataObj;
 }
 
-// Wait for DOM to be fully loaded before attaching event listeners
+// // Function to close the popup
+// function closePopup() {
+//     const popup = document.getElementById('successPopup');
+//     if (popup) {
+//         popup.style.display = 'none';
+//     }
+// }
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm') || document.querySelector('.contact-form');
     
@@ -43,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.disabled = true;
             submitButton.textContent = 'שולח...';
         }
-
+     
         fetch(actionUrl, {
             method: 'POST',
             body: formData,
@@ -53,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
-                integrateToMondayAndThanksPage(formData);
+                integrateToMondayAndThanksPage(createFormDataObject(formData));
             } else {
                 alert('אירעה שגיאה בעת שליחת הטופס. אנא נסה שוב.');
             }
