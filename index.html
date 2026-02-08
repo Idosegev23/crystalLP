@@ -48,7 +48,8 @@
         <!-- Stylesheet and Fonts -->
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Page Loader Styles - Inline for instant load -->
         <style>
             #page-loader {
@@ -164,6 +165,89 @@
                 font-weight: 300;
                 text-transform: uppercase;
                 font-family: 'Assistant', sans-serif;
+            }
+            
+            /* Fixed Phone Icon - Hidden on desktop, shown on mobile */
+            .phone-icon-fixed {
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                width: 3.5rem;
+                height: 3.5rem;
+                background-color: #3a7fc1;
+                border-radius: 50%;
+                display: none; /* Hidden by default (desktop) */
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 12px rgba(58, 127, 193, 0.4);
+                z-index: 1000;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                color: white;
+            }
+            
+            .phone-icon-fixed:hover {
+                background-color: #2d6ba3;
+                transform: scale(1.1);
+                box-shadow: 0 6px 16px rgba(58, 127, 193, 0.6);
+            }
+            
+            .phone-icon-fixed i {
+                font-size: 1.5rem;
+            }
+            
+            /* Fixed WhatsApp Icon */
+            .whatsapp-icon-fixed {
+                position: fixed;
+                bottom: 6.5rem;
+                right: 2rem;
+                width: 3.5rem;
+                height: 3.5rem;
+                background-color: #25D366;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+                z-index: 1000;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                color: white;
+            }
+            
+            .whatsapp-icon-fixed:hover {
+                background-color: #20BA5A;
+                transform: scale(1.1);
+                box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6);
+            }
+            
+            .whatsapp-icon-fixed i {
+                font-size: 1.5rem;
+            }
+            
+            @media (max-width: 768px) {
+                .phone-icon-fixed {
+                    display: flex; /* Show on mobile */
+                    width: 3rem;
+                    height: 3rem;
+                    bottom: 1.5rem;
+                    right: 1.5rem;
+                }
+                
+                .phone-icon-fixed i {
+                    font-size: 1.25rem;
+                }
+                
+                .whatsapp-icon-fixed {
+                    width: 3rem;
+                    height: 3rem;
+                    bottom: 5.5rem;
+                    right: 1.5rem;
+                }
+                
+                .whatsapp-icon-fixed i {
+                    font-size: 1.25rem;
+                }
             }
         </style>
         
@@ -384,11 +468,11 @@
                         <form class="contact-form" action="https://formsubmit.co/crystalview202@gmail.com" id="contactForm"
                         method="POST">
                             <div class="form-row">
-                                <input type="text" name="name" class="form-input" placeholder="שם" required>
                                 <input type="tel" name="phone" min="10" max="10" class="form-input" placeholder="טלפון" required>
+                                <input type="text" name="name" class="form-input" placeholder="שם" required>
                             </div>
                             <div class="form-row">
-                                <input type="email" name="email" class="form-input" placeholder="אימייל שלך">
+                                <input type="text" name="city" class="form-input" placeholder="עיר">
                             </div>
                             <div class="form-row">
                                 <textarea name="message" class="form-input form-textarea" placeholder="הודעה" rows="4"></textarea>
@@ -411,5 +495,15 @@
                 <a target="_blank" href="https://www.crystalview.co.il/privacy-policy">© CrystalView | מדיניות פרטיות</a>
             </div>
         </div>
+        
+        <!-- Fixed WhatsApp Icon -->
+        <a href="https://wa.me/972533366101" class="whatsapp-icon-fixed" aria-label="שלח לנו הודעה ב-WhatsApp" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        
+        <!-- Fixed Phone Icon -->
+        <a href="tel:+972533366101" class="phone-icon-fixed" aria-label="התקשר אלינו">
+            <i class="fa-solid fa-phone"></i>
+        </a>
     </body>
 </html>
